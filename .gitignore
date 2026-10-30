@@ -1,0 +1,7 @@
+.azure/
+local.settings.json
+infra/local.parameters.json
+bin/
+obj/
+TestResults/
+.vs/

@@ -1,0 +1,15 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "WEBSUB_HUB_URL": "http://localhost:7071/",
+    "WEBSUB_ALLOWED_TOPIC_PREFIXES": "https://lqdev.me/,https://www.lqdev.me/,https://luisquintanilla.me/,https://www.luisquintanilla.me/,http://localhost:8099/",
+    "WEBSUB_OPEN_MODE": "false",
+    "WEBSUB_ALLOW_LOCAL_URLS": "true",
+    "WEBSUB_PUBLISH_TOKEN": "",
+    "WEBSUB_DEFAULT_LEASE_SECONDS": "864000",
+    "WEBSUB_MAX_LEASE_SECONDS": "2592000",
+    "WEBSUB_MIN_LEASE_SECONDS": "3600"
+  }
+}

@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/WebSubHub/WebSubHub.fsproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/WebSubHub.Tests/WebSubHub.Tests.fsproj" />
+  </Folder>
+</Solution>

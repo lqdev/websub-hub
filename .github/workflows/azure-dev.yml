@@ -1,0 +1,37 @@
+name: Deploy hub
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
+      AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
+      WEBSUB_PUBLISH_TOKEN: ${{ secrets.WEBSUB_PUBLISH_TOKEN }}
+      WEBSUB_ALLOWED_TOPIC_PREFIXES: ${{ vars.WEBSUB_ALLOWED_TOPIC_PREFIXES || 'https://lqdev.me/,https://www.lqdev.me/,https://luisquintanilla.me/,https://www.luisquintanilla.me/' }}
+      WEBSUB_OPEN_MODE: ${{ vars.WEBSUB_OPEN_MODE || 'false' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - uses: Azure/setup-azd@v2
+      - name: Test
+        run: dotnet test WebSubHub.slnx --nologo
+      - name: Sign in to Azure with OIDC
+        run: azd auth login --client-id "$AZURE_CLIENT_ID" --federated-credential-provider github --tenant-id "$AZURE_TENANT_ID"
+      - name: Provision infrastructure
+        run: azd provision --no-prompt
+      - name: Deploy Function App
+        run: azd deploy --no-prompt
